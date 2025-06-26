@@ -1,67 +1,7 @@
-// Sean Szumlanski
-// COP 3503, Fall 2022
-
-// =============================================================================
-// POSTING THIS FILE ONLINE OR DISTRIBUTING IT IN ANY WAY, IN PART OR IN WHOLE,
-// IS AN ACT OF ACADEMIC MISCONDUCT AND ALSO CONSTITUTES COPYRIGHT INFRINGEMENT.
-// =============================================================================
-
-
-// =============================================================================
-// Overview:
-// =============================================================================
-//
-// You should modify the methods in this file to implement your backtracking
-// solution for this assignment. You'll want to transform the solveMaze()
-// methods into the findPaths() methods required for this assignment.
-//
-// =============================================================================
-// Disclaimer:
-// =============================================================================
-//
-// As usual, the comments in this file are way overkill. They're intended to be
-// educational (and to make this code easier for you to work with), and are not
-// indicative of the kind of comments we'd use in the real world.
-//
-// =============================================================================
-// Maze Format (2D char array):
-// =============================================================================
-//
-// This program assumes there is exactly one person ('@') and one exit ('e') per
-// maze. The initial positions of those characters may vary from maze to maze.
-//
-// This program assumes all mazes are rectangular (all rows have the same
-// length). There are no guarantees regarding the number of walls in the maze
-// or the locations of those walls. It's possible that the outer edges of the
-// maze might not be made up entirely of walls (i.e., the outer edge might
-// contain spaces).
-//
-// While there is guaranteed to be a single person ('@') and a single exit ('e')
-// in a well-formed maze, there is no guarantee that there exists a path from
-// the starting position of the '@' character to the exit.
-//
-// =============================================================================
-// Example:
-// =============================================================================
-//
-// #############
-// #@# #   #   #
-// #   # # # # #
-// # ### # # # #
-// #     #   # #
-// # ##### #####
-// #          e#
-// #############
-//
-// =============================================================================
-// Legend:
-// =============================================================================
-//
 // '#' - wall (not walkable)
 // '@' - person
 // 'e' - exit
 // ' ' - space (walkable)
-
 
 import java.io.*;
 import java.util.*;
@@ -73,12 +13,7 @@ public class Pathogen
 
 	// "Animation" frame rate (frames per second).
 	private static double frameRate = 4.0;
-
-	// Setters. Note that for testing purposes you can call enableAnimation()
-	// from your backtracking method's wrapper method (i.e., the first line of
-	// your public findPaths() method) if you want to override the fact that the
-	// test cases are disabling animation. Just don't forget to remove that
-	// method call before submitting!
+	
 	public static void enableAnimation() { Pathogen.animationEnabled = true; }
 	public static void disableAnimation() { Pathogen.animationEnabled = false; }
 	public static void setFrameRate(double fps) { Pathogen.frameRate = fps; }
@@ -133,7 +68,6 @@ public class Pathogen
 		// To store the string about to be built
 		StringBuilder trekPath = new StringBuilder();
 
-		// Let's goooooooooo!!
 		findPaths(maze, visited, trekPath, startRow, startCol, height, width);
 
 		return paths;
@@ -149,7 +83,6 @@ public class Pathogen
 			printAndWait(maze, height, width, "Searching...", Pathogen.frameRate);
 		}
 
-		// Hoorayyyy!
 		if (visited[currentRow][currentCol] == 'e')
 		{
 			if (Pathogen.animationEnabled)
@@ -190,11 +123,6 @@ public class Pathogen
 			// need to check whether we're overwriting the exit. If so, save the
 			// exit in the visited[][] array so we can actually detect that
 			// we've gotten there.
-			//
-			// NOTE: THIS IS OVERKILL. We could just track the exit position's
-			// row and column in two int variables. However, this approach makes
-			// it easier to extend our code in the event that we want to be able
-			// to handle multiple exits per maze.
 
 			if (maze[newRow][newCol] == EXIT)
 				visited[newRow][newCol] = EXIT;
@@ -209,11 +137,6 @@ public class Pathogen
 
 			// Perform recursive descent.
 			findPaths(maze, visited, trekPath, newRow, newCol, height, width);
-
-			// Undo state change. Note that if we return from the previous call,
-			// we know visited[newRow][newCol] did not contain the exit, and
-			// therefore already contains a breadcrumb, so I haven't updated
-			// that here.
 
 			// Since the exit gets overwritten, we need to put it back for other paths to find
 			if (visited[newRow][newCol] == EXIT)
